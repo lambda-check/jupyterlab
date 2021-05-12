@@ -74,7 +74,7 @@ export class TagTool extends NotebookTools.Tool {
       const oldTags = [
         ...((cell.model.metadata.get('tags') as string[]) ?? [])
       ];
-      let tagsToAdd = name.split(/[,\s]+/);
+      let tagsToAdd = name.split(/[,;]+/).map(x => x.trim());
       tagsToAdd = tagsToAdd.filter(tag => tag !== '' && !oldTags.includes(tag));
       cell.model.metadata.set('tags', oldTags.concat(tagsToAdd));
       this.refreshTags();
@@ -163,7 +163,7 @@ export class TagTool extends NotebookTools.Tool {
     tags = reduce(
       tags,
       (allTags: string[], tag) => {
-        return [...allTags, ...tag.split(/[,\s]+/)];
+        return [...allTags, ...tag.split(/[,]+/).map(x => x.trim())];
       },
       []
     );
