@@ -441,13 +441,17 @@ const browserWidget: JupyterFrontEndPlugin<void> = {
     });
 
     void Promise.all([app.restored, browser.model.restored]).then(() => {
+      let startFunc = () => Private.createLauncher(commands, browser);
+      const startCommand = 'apod:open';
+      if (commands.hasCommand(startCommand))
+        startFunc = () => commands.execute(startCommand);
+
       function maybeCreate() {
         // Create a launcher if there are no open items.
-        if (
-          labShell.isEmpty('main') &&
-          commands.hasCommand('launcher:create')
-        ) {
-          void Private.createLauncher(commands, browser);
+        if (labShell.isEmpty('main') && commands.hasCommand(startCommand)) {
+          // kens_debug: this is where we create the initial
+          // void Private.createLauncher(commands, browser);
+          void startFunc();
         }
       }
 
