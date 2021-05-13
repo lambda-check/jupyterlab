@@ -1,4 +1,6 @@
-.PHONY: build
+.PHONY: build run all
+
+all: build run
 
 build:
 	pip install -e .
