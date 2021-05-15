@@ -486,7 +486,7 @@ export class Sanitizer implements ISanitizer {
       'hr',
       'i',
       // 'iframe' is allowed by Google Caja, but disallowed by default by sanitize-html
-      // , 'iframe'
+      'iframe',
       'img',
       'input',
       'ins',
@@ -640,12 +640,16 @@ export class Sanitizer implements ISanitizer {
       h6: ['align'],
       hr: ['align', 'noshade', 'size', 'width'],
       iframe: [
-        'align',
-        'frameborder',
+        'width',
         'height',
+        'src',
+        'title',
+        'frameborder',
+        'allow',
+        'allowfullscreen',
+        'align',
         'marginheight',
-        'marginwidth',
-        'width'
+        'marginwidth'
       ],
       img: [
         'align',
