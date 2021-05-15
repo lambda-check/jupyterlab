@@ -14,7 +14,8 @@ export class IFrame extends Widget {
     super({ node: Private.createNode() });
     this.addClass('jp-IFrame');
     this.sandbox = options.sandbox || [];
-    this.referrerPolicy = options.referrerPolicy || 'no-referrer';
+    // this.referrerPolicy = options.referrerPolicy || 'no-referrer';
+    this.referrerPolicy = options.referrerPolicy || 'origin';
   }
 
   /**
@@ -55,10 +56,10 @@ export class IFrame extends Widget {
     return this._sandbox.slice();
   }
   set sandbox(values: IFrame.SandboxExceptions[]) {
-    this._sandbox = values.slice();
     const iframe = this.node.querySelector('iframe')!;
+    this._sandbox = values.slice();
     const exceptions = values.length ? values.join(' ') : '';
-    iframe.setAttribute('sandbox', exceptions);
+    iframe.setAttribute('data-ignore-sandbox', exceptions);
   }
 
   /**
@@ -144,7 +145,7 @@ namespace Private {
   export function createNode(): HTMLElement {
     const node = document.createElement('div');
     const iframe = document.createElement('iframe');
-    iframe.setAttribute('sandbox', '');
+    // iframe.setAttribute('sandbox', '');
     iframe.style.height = '100%';
     iframe.style.width = '100%';
     node.appendChild(iframe);
